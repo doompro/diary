@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 
-const Landing = () => (
-  <div>
-    <h1>Landing Page</h1>
-    <p>Benvenuto al diario degli allenamenti!</p>
-  </div>
-);
+import { DatePicker } from "@material-ui/pickers";
+
+const Landing = () => {
+  const [selectedDate, handleDateChange] = useState(new Date());
+
+  return (
+    <div>
+      <DatePicker
+        variant="inline"
+        label="Scegli la data"
+        value={selectedDate}
+        onChange={handleDateChange}
+      />
+    </div>
+  );
+};
 
 export default Landing;
