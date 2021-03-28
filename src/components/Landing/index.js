@@ -36,7 +36,7 @@ const Landing = () => {
   const classes = useStyles();
 
   const [selectedDate, handleDateChange] = useState(new Date());
-  const [exlist, setExlist] = useState(new Array());
+  const [exlist, setExlist] = useState([]);
 
   const removeExercise = (i) => {
     setExlist(exlist.filter((ele, idx) => ele.eleid !== i));
