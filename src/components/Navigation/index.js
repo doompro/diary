@@ -60,82 +60,87 @@ const Navigation = (firebase) => {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-            onClick={() => {
-              history.push(ROUTES.LANDING);
-            }}
-          >
-            <CalendarToday />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            CrossFit Fabriano
-          </Typography>
           <AuthUserContext.Consumer>
             {(authUser) =>
-              authUser ? (
-                <div>
-                  <IconButton
-                    aria-label="account of current user"
-                    aria-controls="menu-appbar"
-                    aria-haspopup="true"
-                    onClick={handleMenu}
-                    color="inherit"
-                  >
-                    <AccountCircle />
-                  </IconButton>
-                  <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorEl}
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    open={open}
-                    onClose={handleClose}
-                  >
-                    <MenuItem
-                      onClick={() => {
-                        history.push(ROUTES.ACCOUNT);
-                        handleClose();
-                      }}
+              <>
+                <IconButton
+                  edge="start"
+                  className={classes.menuButton}
+                  color="inherit"
+                  aria-label="menu"
+                  onClick={() => {
+                    authUser ? history.push(ROUTES.LANDING) : history.push(ROUTES.HOME);
+                  }}
+                >
+
+                  <CalendarToday />
+                </IconButton>
+
+                <Typography variant="h6" className={classes.title}>
+                  CrossFit Fabriano
+                </Typography>
+
+                {authUser ? (
+                  <>
+                    <IconButton
+                      aria-label="account of current user"
+                      aria-controls="menu-appbar"
+                      aria-haspopup="true"
+                      onClick={handleMenu}
+                      color="inherit"
                     >
                       <AccountCircle />
-                      <div className={classes.menuLabel}>Account</div>
-                    </MenuItem>
-                    {authUser.email === "daniele.senigagliesi@gmail.com" && (
-                      <MenuItem onClick={() => history.push(ROUTES.ADMIN)}>
-                        <Build />
-                        <div className={classes.menuLabel}>Admin</div>
-                      </MenuItem>
-                    )}
-                    <MenuItem
-                      className={classes.menuSeparator}
-                      onClick={firebase.firebase.doSignOut}
+                    </IconButton>
+                    <Menu
+                      id="menu-appbar"
+                      anchorEl={anchorEl}
+                      anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      open={open}
+                      onClose={handleClose}
                     >
-                      <ExitToApp />
-                      <div className={classes.menuLabel}>Log out</div>
-                    </MenuItem>
-                  </Menu>
-                </div>
-              ) : (
-                <IconButton
-                  aria-label="Log in"
-                  aria-controls="menu-appbar"
-                  onClick={handleSignIn}
-                  color="inherit"
-                >
-                  <LockOpen />
-                </IconButton>
-              )
+                      <MenuItem
+                        onClick={() => {
+                          history.push(ROUTES.ACCOUNT);
+                          handleClose();
+                        }}
+                      >
+                        <AccountCircle />
+                        <div className={classes.menuLabel}>Account</div>
+                      </MenuItem>
+                      {authUser.email === "daniele.senigagliesi@gmail.com" && (
+                        <MenuItem onClick={() => history.push(ROUTES.ADMIN)}>
+                          <Build />
+                          <div className={classes.menuLabel}>Admin</div>
+                        </MenuItem>
+                      )}
+                      <MenuItem
+                        className={classes.menuSeparator}
+                        onClick={() => { firebase.firebase.doSignOut().then(() => history.push(ROUTES.HOME)) }}
+                      >
+                        <ExitToApp />
+                        <div className={classes.menuLabel}>Log out</div>
+                      </MenuItem>
+                    </Menu>
+                  </>
+                ) : (
+                  <IconButton
+                    aria-label="Log in"
+                    aria-controls="menu-appbar"
+                    onClick={handleSignIn}
+                    color="inherit"
+                  >
+                    <LockOpen />
+                  </IconButton>
+                )}
+              </>
             }
           </AuthUserContext.Consumer>
         </Toolbar>

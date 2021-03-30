@@ -41,7 +41,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 
 const StrengthEdit = (props) => {
     //const classes = useStyles();
-    const [setsNumber, setSetsNumber] = useState(1);
+    const [setsNumber, setSetsNumber] = useState((props.exercise.rx && parseInt(props.exercise.rx.sets)) || 1);
 
     let sets = [];
     for (let i = 0; i < setsNumber; i++) {
@@ -79,7 +79,8 @@ const StrengthEdit = (props) => {
                     label="Serie prescritte"
                     onChange={(event) => {
                         if (!props.exercise.rx) props.exercise.rx = {};
-                        props.exercise.rx.sets = event.target.value
+                        props.exercise.rx.sets = event.target.value;
+                        setSetsNumber(parseInt(event.target.value));
                     }}
                     defaultValue={(props.exercise.rx && props.exercise.rx.sets) || ""}
                 />
@@ -121,32 +122,35 @@ const StrengthEdit = (props) => {
                 </Select>
             </Grid>
 
-            <Grid item>
-                { /* numero di serie fatte  */}
-                <InputLabel id="strength-sets">Numero di serie</InputLabel>
-                <Select
-                    labelId="strength-sets"
-                    id="strength-sets"
-                    value={setsNumber}
-                    onChange={(event) => setSetsNumber(event.target.value)}
-                >
-                    <MenuItem value={1}>1</MenuItem>
-                    <MenuItem value={2}>2</MenuItem>
-                    <MenuItem value={3}>3</MenuItem>
-                    <MenuItem value={4}>4</MenuItem>
-                    <MenuItem value={5}>5</MenuItem>
-                    <MenuItem value={6}>6</MenuItem>
-                    <MenuItem value={7}>7</MenuItem>
-                    <MenuItem value={8}>8</MenuItem>
-                    <MenuItem value={9}>9</MenuItem>
-                    <MenuItem value={10}>10</MenuItem>
-                    <MenuItem value={11}>11</MenuItem>
-                    <MenuItem value={12}>12</MenuItem>
-                    <MenuItem value={13}>13</MenuItem>
-                    <MenuItem value={14}>14</MenuItem>
-                    <MenuItem value={14}>15</MenuItem>
-                </Select>
-            </Grid>
+            {!(props.exercise.rx && props.exercise.rx.sets) ?
+                <Grid item>
+                    { /* numero di serie fatte  */}
+                    <InputLabel id="strength-sets">Numero di serie</InputLabel>
+                    <Select
+                        labelId="strength-sets"
+                        id="strength-sets"
+                        value={setsNumber}
+                        onChange={(event) => setSetsNumber(event.target.value)}
+                    >
+                        <MenuItem value={1}>1</MenuItem>
+                        <MenuItem value={2}>2</MenuItem>
+                        <MenuItem value={3}>3</MenuItem>
+                        <MenuItem value={4}>4</MenuItem>
+                        <MenuItem value={5}>5</MenuItem>
+                        <MenuItem value={6}>6</MenuItem>
+                        <MenuItem value={7}>7</MenuItem>
+                        <MenuItem value={8}>8</MenuItem>
+                        <MenuItem value={9}>9</MenuItem>
+                        <MenuItem value={10}>10</MenuItem>
+                        <MenuItem value={11}>11</MenuItem>
+                        <MenuItem value={12}>12</MenuItem>
+                        <MenuItem value={13}>13</MenuItem>
+                        <MenuItem value={14}>14</MenuItem>
+                        <MenuItem value={14}>15</MenuItem>
+                    </Select>
+                </Grid>
+                : null
+            }
 
             <Grid item>
                 { /* ---- sets: [ Array[ carico / time / reps, carico, carico ] ] */}
