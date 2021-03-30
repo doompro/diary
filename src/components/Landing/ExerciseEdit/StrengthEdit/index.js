@@ -42,6 +42,13 @@ import InputLabel from '@material-ui/core/InputLabel';
 const StrengthEdit = (props) => {
     //const classes = useStyles();
     const [setsNumber, setSetsNumber] = useState((props.exercise.rx && parseInt(props.exercise.rx.sets)) || 1);
+    const [execiseType, setExeciseType] = useState(props.exercise.resultType || "Peso");
+
+
+    const handleTypeChange = (value) => {
+        setExeciseType(value)
+        props.exercise.resultType = value;
+    };
 
     let sets = [];
     for (let i = 0; i < setsNumber; i++) {
@@ -112,8 +119,8 @@ const StrengthEdit = (props) => {
                 <Select
                     labelId="strength-type"
                     id="strength-type"
-                    value={props.exercise.resultType}
-                    onChange={(event) => props.exercise.resultType = event.target.value}
+                    value={execiseType}
+                    onChange={(event) => handleTypeChange(event.target.value)}
                 >
                     <MenuItem value={"Peso"}>Peso</MenuItem>
                     <MenuItem value={"Ripetizioni"}>Ripetizioni</MenuItem>
