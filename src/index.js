@@ -4,6 +4,9 @@ import DateFnsUtils from "@date-io/date-fns"; // choose your lib
 
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 
+import { Provider } from 'react-redux'
+import store from './redux'
+
 import "./index.css";
 //import * as serviceWorker from "./serviceWorker";
 
@@ -13,7 +16,9 @@ import Firebase, { FirebaseContext } from "./components/Firebase";
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </MuiPickersUtilsProvider>
   </FirebaseContext.Provider>,
   document.getElementById("root")

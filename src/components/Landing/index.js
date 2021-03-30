@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import { withFirebase } from "../Firebase";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { DatePicker } from "@material-ui/pickers";
@@ -10,6 +12,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 
+import SaveIcon from '@material-ui/icons/Save';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import ExercisePreview from "./ExercisePreview";
@@ -83,13 +86,29 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Landing = () => {
+const Landing = (props) => {
   const classes = useStyles();
 
   const [selectedDate, handleDateChange] = useState(new Date());
   const [exlist, setExlist] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedExercise, setSelectedExercise] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  const authUid = props.authUid;
+  console.log("authUid: ", authUid);
+
+  useEffect(() => {
+    setLoading(true);
+
+    const dateString = "" + selectedDate.getFullYear() + selectedDate.getMonth() + selectedDate.getDate()
+
+    props.firebase.userExercise(authUid, dateString).on("value", (snapshot) => {
+      const exerciseList = snapshot.val();
+      console.log("READING EXERCISE LIST: ", exerciseList)
+      setExlist(exerciseList || []);
+    });
+  }, [selectedDate, authUid, props.firebase]);
 
   const removeExercise = (i) => {
     setExlist(exlist.filter((ele, idx) => ele.id !== i));
@@ -118,7 +137,16 @@ const Landing = () => {
     setModalOpen(false);
   };
 
+  const handleSaveDay = () => {
+    console.log("saving");
+    const dateString = "" + selectedDate.getFullYear() + selectedDate.getMonth() + selectedDate.getDate()
+
+    props.firebase.userExercise(authUid, dateString).set(exlist)
+  }
+
   const exercises = exlist.map((ele, idx) => <ExercisePreview key={idx} exercise={ele} onRemove={removeExercise} onEdit={handleOpen} />);
+
+  console.log("selectedDate: ", selectedDate);
 
   return (
     <>
@@ -135,7 +163,10 @@ const Landing = () => {
               label="Scegli la data"
               value={selectedDate}
               onChange={handleDateChange}
+              autoOk={true}
             />
+
+            <SaveIcon disabled={loading} onClick={handleSaveDay} />
           </Paper>
         </Grid>
 
@@ -171,4 +202,4 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default withFirebase(Landing);
