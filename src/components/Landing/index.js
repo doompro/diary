@@ -13,6 +13,7 @@ import Fade from '@material-ui/core/Fade';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import ExercisePreview from "./ExercisePreview";
+import ExerciseEdit from "./ExerciseEdit";
 import { create_UUID } from '../../utils/uuid';
 
 /**
@@ -136,8 +137,7 @@ const Landing = () => {
       >
         <Fade in={modalOpen}>
           <Paper className={classes.paper}>
-            <h2 id="title">Dettagli</h2>
-            <p id="transition-modal-description">react-transition-group animates me.</p>
+            <ExerciseEdit exercise={{}} />
           </Paper>
         </Fade>
       </Modal>
