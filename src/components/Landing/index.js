@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import { withAuthorization, AuthCondition } from "../Session";
+
 import { withFirebase } from "../Firebase";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -202,4 +204,4 @@ const Landing = (props) => {
   );
 };
 
-export default withFirebase(Landing);
+export default withFirebase(withAuthorization(AuthCondition)(Landing));
