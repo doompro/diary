@@ -54,14 +54,14 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function getFormContent(execiseType) {
+function getFormContent(execiseType, exercise) {
     switch (execiseType) {
-        case 0:
-            return <ConditioningEdit />;
-        case 1:
-            return <StrengthEdit />;
-        case 2:
-            return <MobilityEdit />;
+        case "Strength":
+            return <StrengthEdit exercise={exercise} />;
+        case "Conditioning":
+            return <ConditioningEdit exercise={exercise} />;
+        case "Mobility":
+            return <MobilityEdit exercise={exercise} />;
         default:
             return "";
     }
@@ -69,8 +69,14 @@ function getFormContent(execiseType) {
 
 const ExerciseEdit = (props) => {
     const classes = useStyles();
+    const [execiseType, setExeciseType] = useState(props.exercise.type || "Strength");
 
-    const [execiseType, setExeciseType] = useState(0);
+    console.log("props.exercise: ", props.exercise);
+
+    const handleTypeChange = (value) => {
+        setExeciseType(value)
+        props.exercise.type = value;
+    };
 
     return (
         <Paper className={classes.exerciseRoot}>
@@ -82,14 +88,14 @@ const ExerciseEdit = (props) => {
                         labelId="exercise-type"
                         id="exercise-type"
                         value={execiseType}
-                        onChange={(event) => setExeciseType(event.target.value)}
+                        onChange={(event) => handleTypeChange(event.target.value)}
                     >
-                        <MenuItem value={0}>Conditioning</MenuItem>
-                        <MenuItem value={1}>Strength</MenuItem>
-                        <MenuItem value={2}>Mobility</MenuItem>
+                        <MenuItem value={"Strength"}>Strength</MenuItem>
+                        <MenuItem value={"Conditioning"}>Conditioning</MenuItem>
+                        <MenuItem value={"Mobility"}>Mobility</MenuItem>
                     </Select>
                 </Grid>
-                {getFormContent(execiseType)}
+                {getFormContent(execiseType, props.exercise)}
             </Grid>
         </Paper >
     );

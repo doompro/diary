@@ -52,14 +52,24 @@ const useStyles = makeStyles((theme) => ({
 const ExercisePreview = (props) => {
     const classes = useStyles();
 
+    let exerciseRx = null;
+    if (props.exercise.rx) {
+        if (props.exercise.rx.sets && props.exercise.rx.reps) {
+            exerciseRx = " : " + props.exercise.rx.sets + " sets x " + props.exercise.rx.reps;
+        }
+        if (props.exercise.rx.load) {
+            exerciseRx = exerciseRx + " @ " + props.exercise.rx.load;
+        }
+    }
+
     return (
         <Paper className={classes.exerciseRoot}>
             <Grid container direction="row" spacing={1} justify='space-between' >
                 <Grid item>
-                    {"Nuovo esercizio " + props.exercise.id}
+                    {props.exercise.title + (exerciseRx ? exerciseRx : "")}
                 </Grid>
                 <Grid item>
-                    <CreateIcon onClick={() => props.onEdit()} className={classes.editIcon} />
+                    <CreateIcon onClick={() => props.onEdit(props.exercise)} className={classes.editIcon} />
                     <DeleteIcon onClick={() => props.onRemove(props.exercise.id)} className={classes.deleteIcon} />
                 </Grid>
             </Grid>

@@ -40,11 +40,24 @@ const ConditioningEdit = (props) => {
     return (
         <>
             <Grid item>
-                { /* ---- exercise: [ nome esercizio / descrizione metcon ]  */}
+                { /* ---- title: [ nome esercizio / descrizione metcon ]  */}
                 <TextField
-                    id="metcon-name"
-                    name="metcon-name"
+                    id="metcon-title"
+                    name="metcon-title"
                     label="Nome"
+                    onChange={(event) => props.exercise.title = event.target.value}
+                    defaultValue={props.exercise.title}
+                />
+            </Grid>
+
+            <Grid item>
+                { /* ---- description: [ nome esercizio / descrizione metcon ]  */}
+                <TextField
+                    id="metcon-description"
+                    name="metcon-description"
+                    label="Description"
+                    onChange={(event) => props.exercise.description = event.target.description}
+                    defaultValue={props.exercise.description}
                 />
             </Grid>
 
@@ -54,32 +67,36 @@ const ConditioningEdit = (props) => {
                 <Select
                     labelId="metcon-type"
                     id="metcon-type"
-                    value={0}
-                    onChange={() => { }}
+                    value={props.exercise.resultType}
+                    onChange={(event) => props.exercise.resultType = event.target.value}
                 >
-                    <MenuItem value={0}>For time</MenuItem>
-                    <MenuItem value={1}>Amrap</MenuItem>
-                    <MenuItem value={2}>Weight</MenuItem>
-                    <MenuItem value={2}>Other</MenuItem>
-                    <MenuItem value={2}>No result ( for quality )</MenuItem>
+                    <MenuItem value={"Tempo"}>Tempo</MenuItem>
+                    <MenuItem value={"Ripetizioni"}>Ripetizioni</MenuItem>
+                    <MenuItem value={"Peso"}>Peso</MenuItem>
+                    <MenuItem value={"Altro"}>Altro</MenuItem>
+                    <MenuItem value={"No"}>No result ( for quality )</MenuItem>
                 </Select>
             </Grid>
 
             <Grid item>
-                { /* ---- exercise: [ nome esercizio / descrizione metcon ]  */}
+                { /* ---- score: [ score ]  */}
                 <TextField
-                    id="metcon-result"
-                    name="metcon-result"
-                    label="Risultato"
+                    id="metcon-score"
+                    name="metcon-score"
+                    label="Score"
+                    onChange={(event) => props.exercise.score = event.target.score}
+                    defaultValue={props.exercise.score}
                 />
             </Grid>
 
             <Grid item>
-                { /* ---- exercise: [ nome esercizio / descrizione metcon ]  */}
+                { /* ---- note: [ note ]  */}
                 <TextField
                     id="metcon-note"
                     name="metcon-note"
                     label="Note"
+                    onChange={(event) => props.exercise.note = event.target.value}
+                    defaultValue={props.exercise.note}
                 />
             </Grid>
         </>

@@ -33,12 +33,27 @@ import { create_UUID } from '../../utils/uuid';
  * 
  * ex
  * ---- id: uuid
+ * ---- rx: [ prescrizione ]
+ * -------------- sets
+ * -------------- reps
+ * -------------- load
  * ---- type: [ metcon, strength, mobility ]
  * ---- title: [ nome esercizio ]
  * ---- description: [ descrizione ]
  * ---- sets: [ Array[ carico / time / reps, carico, carico ] ]
  * ---- resultType: [ time / amrap / weight / other / no result ( for quality ) ]
  */
+
+/*const itemTemplate = {
+  id: "", //uuid
+  title: "", //[ nome esercizio ]
+  description: "", //[ descrizione wod]
+  type: "", //[ metcon, strength, mobility ]
+  rx: { sets: "", reps: "", load: "" }, //[ prescrizione ]
+  sets: [], //[ Array[ carico / time / reps, carico, carico ] ]
+  resultType: "", //[ Peso, Ripetizioni, Altro, No ]
+  score: "", //[ score ]
+}*/
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -74,17 +89,28 @@ const Landing = () => {
   const [selectedDate, handleDateChange] = useState(new Date());
   const [exlist, setExlist] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [selectedExercise, setSelectedExercise] = useState({});
 
   const removeExercise = (i) => {
     setExlist(exlist.filter((ele, idx) => ele.id !== i));
   };
 
   const addExercise = () => {
-    const newExercise = { id: create_UUID() };
+    const newExercise = {
+      id: create_UUID(),
+      title: "Nuovo",
+      description: "",
+      type: "",
+      rx: { sets: "", reps: "", load: "" },
+      sets: [],
+      resultType: "",
+      score: ""
+    };
     setExlist(exlist.concat(newExercise))
   };
 
-  const handleOpen = () => {
+  const handleOpen = (exercise) => {
+    setSelectedExercise(exercise);
     setModalOpen(true);
   };
 
@@ -137,7 +163,7 @@ const Landing = () => {
       >
         <Fade in={modalOpen}>
           <Paper className={classes.paper}>
-            <ExerciseEdit exercise={{}} />
+            <ExerciseEdit exercise={selectedExercise} />
           </Paper>
         </Fade>
       </Modal>

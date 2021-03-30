@@ -38,11 +38,23 @@ const MobilityEdit = (props) => {
     return (
         <>
             <Grid item>
+                { /* ---- title: nome esercizio  */}
+                <TextField
+                    id="mobility-title"
+                    name="mobility-title"
+                    label="Note"
+                    onChange={(event) => props.exercise.title = event.target.value}
+                    defaultValue={props.exercise.title}
+                />
+            </Grid>
+            <Grid item>
                 { /* ---- note: note generali  */}
                 <TextField
                     id="mobility-note"
                     name="mobility-note"
                     label="Note"
+                    onChange={(event) => props.exercise.note = event.target.value}
+                    defaultValue={props.exercise.note}
                 />
             </Grid>
         </>
