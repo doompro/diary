@@ -103,15 +103,12 @@ const Landing = (props) => {
   const [exlist, setExlist] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedExercise, setSelectedExercise] = useState({});
-  const [loading, setLoading] = useState(false);
   const [enableSave, setEnableSave] = useState(false);
 
   const authUid = props.authUid;
   console.log("authUid: ", authUid);
 
   useEffect(() => {
-    setLoading(true);
-
     const dateString =
       "" +
       selectedDate.getFullYear() +
