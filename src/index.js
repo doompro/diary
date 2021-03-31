@@ -8,7 +8,7 @@ import { Provider } from 'react-redux'
 import store from './redux'
 
 import "./index.css";
-//import * as serviceWorker from "./serviceWorker";
+import * as serviceWorker from "./serviceWorker";
 
 import App from "./components/App";
 import Firebase, { FirebaseContext } from "./components/Firebase";
@@ -23,6 +23,12 @@ ReactDOM.render(
   </FirebaseContext.Provider>,
   document.getElementById("root")
 );
+
+serviceWorker.register({
+  onUpdate: r => {
+    console.error("update da fare!");
+  }
+});
 
 //serviceWorker.unregister();
 
