@@ -85,6 +85,15 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
   },
+
+  saveAndCalendarContainer: {
+    display: "flex",
+  },
+
+  saveIcon: {
+    fontSize: "50px",
+    marginLeft: "10px",
+  },
 }));
 
 const Landing = (props) => {
@@ -183,8 +192,7 @@ const Landing = (props) => {
               onChange={handleDateChange}
               autoOk={true}
             />
-
-            <SaveIcon disabled={loading} onClick={handleSaveDay} />
+            <SaveIcon color={!loading ? "disabled" : "inherit"} className={classes.saveIcon} onClick={handleSaveDay} />
           </Paper>
         </Grid>
 
