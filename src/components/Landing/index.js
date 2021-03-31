@@ -140,6 +140,7 @@ const Landing = (props) => {
 
   const handleClose = () => {
     setModalOpen(false);
+    handleSaveDay();
   };
 
   const handleSaveDay = () => {
