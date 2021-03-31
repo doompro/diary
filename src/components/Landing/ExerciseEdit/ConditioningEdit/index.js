@@ -65,7 +65,7 @@ const ConditioningEdit = (props) => {
           name="metcon-description"
           label="Description"
           onChange={(event) =>
-            (props.exercise.description = event.target.description)
+            (props.exercise.description = event.target.value)
           }
           defaultValue={props.exercise.description}
         />
@@ -94,7 +94,7 @@ const ConditioningEdit = (props) => {
           id="metcon-score"
           name="metcon-score"
           label="Score"
-          onChange={(event) => (props.exercise.score = event.target.score)}
+          onChange={(event) => (props.exercise.score = event.target.value)}
           defaultValue={props.exercise.score}
         />
       </Grid>
