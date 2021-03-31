@@ -66,7 +66,7 @@ const ExercisePreview = (props) => {
   }
 
   return (
-    <Paper className={classes.exerciseRoot}>
+    <Paper className={classes.exerciseRoot} onClick={() => props.onEdit(props.exercise)}>
       <Grid container direction="row" spacing={1} justify="space-between">
         <Grid item>
           {props.exercise.title + (exerciseRx ? exerciseRx : "")}
@@ -77,7 +77,10 @@ const ExercisePreview = (props) => {
             className={classes.editIcon}
           />
           <DeleteIcon
-            onClick={() => props.onRemove(props.exercise.id)}
+            onClick={(event) => {
+              event.stopPropagation();
+              props.onRemove(props.exercise.id);
+            }}
             className={classes.deleteIcon}
           />
         </Grid>

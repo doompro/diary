@@ -104,6 +104,7 @@ const Landing = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedExercise, setSelectedExercise] = useState({});
   const [loading, setLoading] = useState(false);
+  const [enableSave, setEnableSave] = useState(false);
 
   const authUid = props.authUid;
   console.log("authUid: ", authUid);
@@ -126,6 +127,7 @@ const Landing = (props) => {
 
   const removeExercise = (i) => {
     setExlist(exlist.filter((ele, idx) => ele.id !== i));
+    setEnableSave(true);
   };
 
   const addExercise = () => {
@@ -140,6 +142,7 @@ const Landing = (props) => {
       score: "",
     };
     setExlist(exlist.concat(newExercise));
+    setEnableSave(true);
   };
 
   const handleOpen = (exercise) => {
@@ -161,6 +164,7 @@ const Landing = (props) => {
       selectedDate.getDate();
 
     props.firebase.userExercise(authUid, dateString).set(exlist);
+    setEnableSave(false);
   };
 
   const exercises = exlist.map((ele, idx) => (
@@ -191,8 +195,9 @@ const Landing = (props) => {
               value={selectedDate}
               onChange={handleDateChange}
               autoOk={true}
+              format="EEEE dd MMMM"
             />
-            <SaveIcon color={!loading ? "disabled" : "inherit"} className={classes.saveIcon} onClick={handleSaveDay} />
+            <SaveIcon color={enableSave ? "inherit" : "disabled"} className={classes.saveIcon} onClick={handleSaveDay} />
           </Paper>
         </Grid>
 
