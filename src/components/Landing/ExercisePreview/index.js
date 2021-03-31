@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
   exerciseRoot: {
     minHeight: 5,
     minWidth: "80%",
+    maxWidth: "80%",
     padding: theme.spacing(2),
 
     margin: "5px",
@@ -47,6 +48,10 @@ const useStyles = makeStyles((theme) => ({
   deleteIcon: {
     cursor: "pointer",
   },
+
+  exerciseTitle: {
+    maxWidth: "60%",
+  }
 }));
 
 const ExercisePreview = (props) => {
@@ -68,7 +73,7 @@ const ExercisePreview = (props) => {
   return (
     <Paper className={classes.exerciseRoot} onClick={() => props.onEdit(props.exercise)}>
       <Grid container direction="row" spacing={1} justify="space-between">
-        <Grid item>
+        <Grid item className={classes.exerciseTitle}>
           {props.exercise.title + (exerciseRx ? exerciseRx : "")}
         </Grid>
         <Grid item>

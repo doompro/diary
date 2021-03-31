@@ -72,6 +72,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
 
+  calendarAndSave: {
+    minWidth: "80%",
+    maxWidth: "100%",
+    minHeight: 5,
+
+    padding: theme.spacing(2),
+  },
+
   addicon: {
     marginRight: 5,
   },
@@ -185,14 +193,14 @@ const Landing = (props) => {
         spacing={3}
       >
         <Grid item xs>
-          <Paper className={classes.paper} elevation={3}>
+          <Paper className={classes.calendarAndSave} elevation={3}>
             <DatePicker
               variant="inline"
               label="Scegli la data"
               value={selectedDate}
               onChange={handleDateChange}
               autoOk={true}
-              format="EEEE dd MMMM"
+              format="EEE dd MMMM"
             />
             <SaveIcon color={enableSave ? "inherit" : "disabled"} className={classes.saveIcon} onClick={handleSaveDay} />
           </Paper>
@@ -206,7 +214,7 @@ const Landing = (props) => {
           className={classes.addelementgrid}
           onClick={() => addExercise()}
         >
-          <Paper className={classes.paper} elevation={3}>
+          <Paper className={classes.calendarAndSave} elevation={3}>
             <AddCircleOutlineIcon className={classes.addicon} />
             {"AGGIUNGI ESERCIZIO"}
           </Paper>
