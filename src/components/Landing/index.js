@@ -17,6 +17,9 @@ import Fade from "@material-ui/core/Fade";
 import SaveIcon from "@material-ui/icons/Save";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+
 import ExercisePreview from "./ExercisePreview";
 import ExerciseEdit from "./ExerciseEdit";
 import { create_UUID } from "../../utils/uuid";
@@ -77,6 +80,9 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "100%",
     minHeight: 5,
 
+    display: "flex",
+    justifyContent: "space-between",
+
     padding: theme.spacing(2),
   },
 
@@ -101,6 +107,14 @@ const useStyles = makeStyles((theme) => ({
   saveIcon: {
     fontSize: "50px",
     marginLeft: "10px",
+  },
+
+  arrowIcon: {
+    fontSize: "40px",
+  },
+
+  calendar: {
+    width: "50%",
   },
 }));
 
@@ -181,6 +195,18 @@ const Landing = (props) => {
     />
   ));
 
+  const handleDayForward = () => {
+    let newDate = new Date(selectedDate);
+    newDate.setDate(selectedDate.getDate() + 1)
+    handleDateChange(newDate);
+  };
+
+  const handleDayBackward = () => {
+    let newDateBack = new Date(selectedDate);
+    newDateBack.setDate(selectedDate.getDate() - 1)
+    handleDateChange(newDateBack);
+  };
+
   console.log("selectedDate: ", selectedDate);
 
   return (
@@ -194,6 +220,7 @@ const Landing = (props) => {
       >
         <Grid item xs>
           <Paper className={classes.calendarAndSave} elevation={3}>
+            <ArrowBackIosIcon className={classes.arrowIcon} onClick={handleDayBackward} />
             <DatePicker
               variant="inline"
               label="Scegli la data"
@@ -201,8 +228,10 @@ const Landing = (props) => {
               onChange={handleDateChange}
               autoOk={true}
               format="EEE dd MMMM"
+              className={classes.calendar}
             />
             <SaveIcon color={enableSave ? "inherit" : "disabled"} className={classes.saveIcon} onClick={handleSaveDay} />
+            <ArrowForwardIosIcon className={classes.arrowIcon} onClick={handleDayForward} />
           </Paper>
         </Grid>
 
