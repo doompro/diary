@@ -1,115 +1,187 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { compose } from "recompose";
 
 import { withFirebase } from "../Firebase";
 import * as ROUTES from "../../constants/routes";
 
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+
 const SignUpPage = () => (
-  <div>
-    <h1>SignUp</h1>
-    <SignUpForm />
-  </div>
+  <SignUpForm />
 );
 
-const INITIAL_STATE = {
-  username: "",
-  email: "",
-  passwordOne: "",
-  passwordTwo: "",
-  error: null,
-};
-
-class SignUpFormBase extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { ...INITIAL_STATE };
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © CrossFit Fabriano'}
+      {' '}
+    </Typography>
+  );
+}
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
   }
+}));
 
-  onSubmit = (event) => {
-    const { username, email, passwordOne } = this.state;
+const SignUpFormBase = (props) => {
+  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [passwordOne, setPasswordOne] = useState("");
+  const [passwordTwo, setPasswordTwo] = useState("");
+  const [error, setError] = useState(null);
 
-    this.props.firebase
+  const classes = useStyles();
+
+  const onSubmit = (event) => {
+    props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then((authUser) => {
         // Create a user in your Firebase realtime database
-        return this.props.firebase.user(authUser.user.uid).set({
+        return props.firebase.user(authUser.user.uid).set({
           username,
           email,
         });
       })
-      .then((authUser) => {
-        this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.HOME);
+      .then(() => {
+        setUserName("");
+        setEmail("");
+        setPasswordOne("");
+        setPasswordTwo("");
+
+        props.history.push(ROUTES.LANDING);
       })
       .catch((error) => {
-        this.setState({ error });
+        console.log("error catch: ", error)
+        setError(error);
       });
 
     event.preventDefault();
   };
 
-  onChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
+  const isInvalid =
+    passwordOne !== passwordTwo ||
+    passwordOne === "" ||
+    email === "" ||
+    username === "";
 
-  render() {
-    const { username, email, passwordOne, passwordTwo, error } = this.state;
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign up
+        </Typography>
+        <form onSubmit={onSubmit} className={classes.form} noValidate>
+          <TextField
+            autoComplete="fname"
+            name="username"
+            variant="outlined"
+            required
+            fullWidth
+            id="username"
+            label="Username"
+            autoFocus
+            margin="normal"
+            value={username}
+            onChange={(event) => setUserName(event.target.value)}
+          />
 
-    const isInvalid =
-      passwordOne !== passwordTwo ||
-      passwordOne === "" ||
-      email === "" ||
-      username === "";
+          <TextField
+            variant="outlined"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            margin="normal"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
 
-    return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          name="username"
-          value={username}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Full Name"
-        />
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name="passwordOne"
-          value={passwordOne}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <input
-          name="passwordTwo"
-          value={passwordTwo}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Confirm Password"
-        />
-        <button type="submit" disabled={isInvalid}>
-          Sign Up
-        </button>
+          <TextField
+            variant="outlined"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="passwordOne"
+            autoComplete="current-password"
+            margin="normal"
+            value={passwordOne}
+            onChange={(event) => setPasswordOne(event.target.value)}
+          />
 
-        {error && <p>{error.message}</p>}
-      </form>
-    );
-  }
+          <TextField
+            variant="outlined"
+            required
+            fullWidth
+            name="password"
+            label="Confirm Password"
+            type="password"
+            id="passwordTwo"
+            autoComplete="current-password"
+            margin="normal"
+            value={passwordTwo}
+            onChange={(event) => setPasswordTwo(event.target.value)}
+          />
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            disabled={isInvalid}
+          >
+            Sign Up
+          </Button>
+
+          {error && <p>{error.message}</p>}
+
+        </form>
+      </div>
+      <Box mt={5}>
+        <Copyright />
+      </Box>
+    </Container>
+  );
 }
 
 const SignUpLink = () => (
   <p>
-    Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
+    <Link to={ROUTES.SIGN_UP}>Don't have an account? Sign Up</Link>
   </p>
 );
 
-const SignUpForm = compose(withRouter, withFirebase)(SignUpFormBase);
+const SignUpForm = withRouter(withFirebase(SignUpFormBase));
 
 export default SignUpPage;
 
