@@ -7,23 +7,23 @@ import { withFirebase } from "../Firebase";
 import { makeStyles } from "@material-ui/core/styles";
 import { DatePicker } from "@material-ui/pickers";
 
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
 
-import SaveIcon from '@material-ui/icons/Save';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import SaveIcon from "@material-ui/icons/Save";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 
 import ExercisePreview from "./ExercisePreview";
 import ExerciseEdit from "./ExerciseEdit";
-import { create_UUID } from '../../utils/uuid';
+import { create_UUID } from "../../utils/uuid";
 
 /**
  * Exercise template:
- * 
+ *
  * db
  * -- userid
  * ------- date
@@ -34,8 +34,8 @@ import { create_UUID } from '../../utils/uuid';
  * ------- date
  * -------------- ex
  * -------------- ex
- * 
- * 
+ *
+ *
  * ex
  * ---- id: uuid
  * ---- rx: [ prescrizione ]
@@ -66,10 +66,10 @@ const useStyles = makeStyles((theme) => ({
     minWidth: "100%",
     padding: theme.spacing(2),
 
-    display: 'flex',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    flexWrap: "wrap",
+    justifyContent: "center",
   },
 
   addicon: {
@@ -77,15 +77,14 @@ const useStyles = makeStyles((theme) => ({
   },
 
   addelementgrid: {
-    cursor: 'pointer',
+    cursor: "pointer",
   },
 
-
   modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 }));
 
 const Landing = (props) => {
@@ -103,11 +102,15 @@ const Landing = (props) => {
   useEffect(() => {
     setLoading(true);
 
-    const dateString = "" + selectedDate.getFullYear() + selectedDate.getMonth() + selectedDate.getDate()
+    const dateString =
+      "" +
+      selectedDate.getFullYear() +
+      selectedDate.getMonth() +
+      selectedDate.getDate();
 
     props.firebase.userExercise(authUid, dateString).on("value", (snapshot) => {
       const exerciseList = snapshot.val();
-      console.log("READING EXERCISE LIST: ", exerciseList)
+      console.log("READING EXERCISE LIST: ", exerciseList);
       setExlist(exerciseList || []);
     });
   }, [selectedDate, authUid, props.firebase]);
@@ -125,9 +128,9 @@ const Landing = (props) => {
       rx: { sets: "", reps: "", load: "" },
       sets: [],
       resultType: "",
-      score: ""
+      score: "",
     };
-    setExlist(exlist.concat(newExercise))
+    setExlist(exlist.concat(newExercise));
   };
 
   const handleOpen = (exercise) => {
@@ -141,23 +144,35 @@ const Landing = (props) => {
 
   const handleSaveDay = () => {
     console.log("saving");
-    const dateString = "" + selectedDate.getFullYear() + selectedDate.getMonth() + selectedDate.getDate()
+    const dateString =
+      "" +
+      selectedDate.getFullYear() +
+      selectedDate.getMonth() +
+      selectedDate.getDate();
 
-    props.firebase.userExercise(authUid, dateString).set(exlist)
-  }
+    props.firebase.userExercise(authUid, dateString).set(exlist);
+  };
 
-  const exercises = exlist.map((ele, idx) => <ExercisePreview key={idx} exercise={ele} onRemove={removeExercise} onEdit={handleOpen} />);
+  const exercises = exlist.map((ele, idx) => (
+    <ExercisePreview
+      key={idx}
+      exercise={ele}
+      onRemove={removeExercise}
+      onEdit={handleOpen}
+    />
+  ));
 
   console.log("selectedDate: ", selectedDate);
 
   return (
     <>
-      <Grid container
+      <Grid
+        container
         direction="column"
         justify="center"
         alignItems="center"
-        spacing={3}>
-
+        spacing={3}
+      >
         <Grid item xs>
           <Paper className={classes.paper} elevation={3}>
             <DatePicker
@@ -174,12 +189,17 @@ const Landing = (props) => {
 
         {exercises}
 
-        <Grid item xs className={classes.addelementgrid} onClick={() => addExercise()}>
+        <Grid
+          item
+          xs
+          className={classes.addelementgrid}
+          onClick={() => addExercise()}
+        >
           <Paper className={classes.paper} elevation={3}>
-            <AddCircleOutlineIcon className={classes.addicon} />{"AGGIUNGI ESERCIZIO"}
+            <AddCircleOutlineIcon className={classes.addicon} />
+            {"AGGIUNGI ESERCIZIO"}
           </Paper>
         </Grid>
-
       </Grid>
 
       <Modal
@@ -196,7 +216,10 @@ const Landing = (props) => {
       >
         <Fade in={modalOpen}>
           <Paper className={classes.paper}>
-            <ExerciseEdit exercise={selectedExercise} />
+            <ExerciseEdit
+              exercise={selectedExercise}
+              closePopup={handleClose}
+            />
           </Paper>
         </Fade>
       </Modal>
