@@ -7,6 +7,7 @@ import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 /**
  * Exercise template:
@@ -60,7 +61,7 @@ const ConditioningEdit = (props) => {
 
       <Grid item>
         {/* ---- description: [ nome esercizio / descrizione metcon ]  */}
-        <TextField
+        <TextareaAutosize
           id="metcon-description"
           name="metcon-description"
           label="Description"

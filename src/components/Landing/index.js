@@ -152,7 +152,7 @@ const Landing = (props) => {
   const addExercise = () => {
     const newExercise = {
       id: create_UUID(),
-      title: "Nuovo",
+      title: "",
       description: "",
       type: "",
       rx: { sets: "", reps: "", load: "" },

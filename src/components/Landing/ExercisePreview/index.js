@@ -74,7 +74,7 @@ const ExercisePreview = (props) => {
     <Paper className={classes.exerciseRoot} onClick={() => props.onEdit(props.exercise)}>
       <Grid container direction="row" spacing={1} justify="space-between">
         <Grid item className={classes.exerciseTitle}>
-          {props.exercise.title + (exerciseRx ? exerciseRx : "")}
+          {(props.exercise.title && props.exercise.title !== "" ? props.exercise.title : "Nuovo") + (exerciseRx ? exerciseRx : "")}
         </Grid>
         <Grid item>
           <CreateIcon
