@@ -14,7 +14,7 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 
-import SaveIcon from "@material-ui/icons/Save";
+//import SaveIcon from "@material-ui/icons/Save";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -125,10 +125,9 @@ const Landing = (props) => {
   const [exlist, setExlist] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedExercise, setSelectedExercise] = useState({});
-  const [enableSave, setEnableSave] = useState(false);
+  //const [enableSave, setEnableSave] = useState(false);
 
   const authUid = props.authUid;
-  console.log("authUid: ", authUid);
 
   useEffect(() => {
     const dateString =
@@ -145,8 +144,10 @@ const Landing = (props) => {
   }, [selectedDate, authUid, props.firebase]);
 
   const removeExercise = (i) => {
+    handleSaveDay(exlist.filter((ele, idx) => ele.id !== i));
+
     setExlist(exlist.filter((ele, idx) => ele.id !== i));
-    setEnableSave(true);
+    //setEnableSave(true);
   };
 
   const addExercise = () => {
@@ -160,8 +161,13 @@ const Landing = (props) => {
       resultType: "",
       score: "",
     };
-    setExlist(exlist.concat(newExercise));
-    setEnableSave(true);
+
+    const newExlist = exlist.concat(newExercise);
+
+    handleSaveDay(newExlist);
+    setExlist(newExlist);
+
+    //setEnableSave(true);
   };
 
   const handleOpen = (exercise) => {
@@ -174,16 +180,19 @@ const Landing = (props) => {
     handleSaveDay();
   };
 
-  const handleSaveDay = () => {
-    console.log("saving");
+  const handleSaveDay = (newExercises) => {
+    const exToSave = newExercises ? newExercises : exlist;
+
     const dateString =
       "" +
       selectedDate.getFullYear() +
       selectedDate.getMonth() +
       selectedDate.getDate();
 
-    props.firebase.userExercise(authUid, dateString).set(exlist);
-    setEnableSave(false);
+    console.log("saving: ", dateString, exToSave);
+
+    props.firebase.userExercise(authUid, dateString).set(exToSave);
+    //setEnableSave(false);
   };
 
   const exercises = exlist.map((ele, idx) => (
@@ -207,8 +216,6 @@ const Landing = (props) => {
     handleDateChange(newDateBack);
   };
 
-  console.log("selectedDate: ", selectedDate);
-
   return (
     <>
       <Grid
@@ -230,7 +237,7 @@ const Landing = (props) => {
               format="EEE dd MMMM"
               className={classes.calendar}
             />
-            <SaveIcon color={enableSave ? "inherit" : "disabled"} className={classes.saveIcon} onClick={handleSaveDay} />
+            {/*<SaveIcon color={enableSave ? "inherit" : "disabled"} className={classes.saveIcon} onClick={handleSaveDay} />*/}
             <ArrowForwardIosIcon className={classes.arrowIcon} onClick={handleDayForward} />
           </Paper>
         </Grid>
