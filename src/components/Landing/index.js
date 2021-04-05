@@ -101,10 +101,18 @@ const useStyles = makeStyles((theme) => ({
   },
 
   modal: {
-    display: "flex",
+    //display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    overflowY: "auto"
+
+
+    //position: 'absolute',
+    //top: '10%',
+    //left: '10%',
+    overflow: 'scroll',
+    height: '100%',
+    width: '100%',
+    display: 'block'
   },
 
   saveAndCalendarContainer: {
@@ -292,12 +300,10 @@ const Landing = (props) => {
         }}
       >
         <Fade in={modalOpen}>
-          <Paper className={classes.paper}>
-            <ExerciseEdit
-              exercise={selectedExercise}
-              closePopup={handleClose}
-            />
-          </Paper>
+          <ExerciseEdit
+            exercise={selectedExercise}
+            closePopup={handleClose}
+          />
         </Fade>
       </Modal>
 
