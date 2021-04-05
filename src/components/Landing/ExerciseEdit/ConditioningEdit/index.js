@@ -81,13 +81,14 @@ const ConditioningEdit = (props) => {
       scoreDiv = <> <Grid item>
         { /* ---- sets: [ Array[ carico / time / reps, carico, carico ] ] */}
         <TextField
+          type="number"
           id="metcon-sets"
           name="metcon-sets"
           label="Numero totale di Intervalli"
           onChange={(event) => {
             setSetsNumber(event.target.value);
           }}
-          defaultValue={props.exercise.sets}
+          defaultValue={setsNumber}
         />
       </Grid>
         {sets}
@@ -114,7 +115,7 @@ const ConditioningEdit = (props) => {
         <TextField
           id="metcon-title"
           name="metcon-title"
-          label="Nome"
+          label="Nome (Opzionale)"
           onChange={(event) => (props.exercise.title = event.target.value)}
           defaultValue={props.exercise.title}
         />
@@ -122,6 +123,7 @@ const ConditioningEdit = (props) => {
 
       <Grid item>
         {/* ---- description: [ nome esercizio / descrizione metcon ]  */}
+        <InputLabel id="metcon-description-label">Descrizione del wod</InputLabel>
         <TextareaAutosize
           id="metcon-description"
           name="metcon-description"

@@ -132,29 +132,14 @@ const StrengthEdit = (props) => {
             {!(props.exercise.rx && props.exercise.rx.sets) ?
                 <Grid item>
                     { /* numero di serie fatte  */}
-                    <InputLabel id="strength-sets">Numero di serie</InputLabel>
-                    <Select
-                        labelId="strength-sets"
+                    <TextField
+                        type="number"
                         id="strength-sets"
-                        value={setsNumber}
+                        name="strength-sets"
+                        label="Numero di serie"
                         onChange={(event) => setSetsNumber(event.target.value)}
-                    >
-                        <MenuItem value={1}>1</MenuItem>
-                        <MenuItem value={2}>2</MenuItem>
-                        <MenuItem value={3}>3</MenuItem>
-                        <MenuItem value={4}>4</MenuItem>
-                        <MenuItem value={5}>5</MenuItem>
-                        <MenuItem value={6}>6</MenuItem>
-                        <MenuItem value={7}>7</MenuItem>
-                        <MenuItem value={8}>8</MenuItem>
-                        <MenuItem value={9}>9</MenuItem>
-                        <MenuItem value={10}>10</MenuItem>
-                        <MenuItem value={11}>11</MenuItem>
-                        <MenuItem value={12}>12</MenuItem>
-                        <MenuItem value={13}>13</MenuItem>
-                        <MenuItem value={14}>14</MenuItem>
-                        <MenuItem value={14}>15</MenuItem>
-                    </Select>
+                        defaultValue={setsNumber}
+                    />
                 </Grid>
                 : null
             }
