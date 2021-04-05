@@ -146,7 +146,7 @@ const Landing = (props) => {
 
     props.firebase.userExercise(authUid, dateString).on("value", (snapshot) => {
       const exerciseList = snapshot.val();
-      console.log("READING EXERCISE LIST: ", exerciseList);
+      //console.log("READING EXERCISE LIST: ", exerciseList);
       setExlist(exerciseList || []);
     });
   }, [selectedDate, authUid, props.firebase]);
@@ -210,8 +210,6 @@ const Landing = (props) => {
       selectedDate.getFullYear() +
       selectedDate.getMonth() +
       selectedDate.getDate();
-
-    console.log("saving: ", dateString, exToSave);
 
     props.firebase.userExercise(authUid, dateString).set(exToSave);
     //setEnableSave(false);

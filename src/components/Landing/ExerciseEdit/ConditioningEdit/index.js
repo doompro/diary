@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-
-//import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 import Grid from "@material-ui/core/Grid";
 import Select from "@material-ui/core/Select";
@@ -35,16 +34,78 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 /*const useStyles = makeStyles((theme) => ({
 }));*/
 
+const useStyles = makeStyles((theme) => ({
+  conditioningDescription: {
+    width: "100%",
+  }
+}));
+
 const ConditioningEdit = (props) => {
-  //const classes = useStyles();
+  const classes = useStyles();
+
   const [execiseType, setExeciseType] = useState(
     props.exercise.resultType || "Tempo"
   );
+
+  const [setsNumber, setSetsNumber] = useState((props.exercise && parseInt(props.exercise.sets)) || 1);
 
   const handleTypeChange = (value) => {
     setExeciseType(value);
     props.exercise.resultType = value;
   };
+
+  let sets = [];
+  console.log("parseInt(setsNumber): ", parseInt(setsNumber))
+  for (let i = 0; i < parseInt(setsNumber); i++) {
+    sets.push(<TextField
+      key={i}
+      id={"metcon-set-" + (i + 1)}
+      name={"metcon-set-" + (i + 1)}
+      label={"Intervallo " + (i + 1)}
+      onChange={(event) => {
+        if (!props.exercise.sets) props.exercise.sets = [];
+        props.exercise.sets[i] = event.target.value;
+      }}
+      defaultValue={(props.exercise.sets && props.exercise.sets[i]) || ''}
+    />);
+  }
+
+  let scoreDiv = null;
+
+  switch (execiseType) {
+    case "No":
+      scoreDiv = null;
+      break;
+
+    case "Intervalli":
+      scoreDiv = <> <Grid item>
+        { /* ---- sets: [ Array[ carico / time / reps, carico, carico ] ] */}
+        <TextField
+          id="metcon-sets"
+          name="metcon-sets"
+          label="Numero totale di Intervalli"
+          onChange={(event) => {
+            setSetsNumber(event.target.value);
+          }}
+          defaultValue={props.exercise.sets}
+        />
+      </Grid>
+        {sets}
+      </>;
+      break;
+
+    default:
+      scoreDiv = <Grid item>
+        {/* ---- score: [ score ]  */}
+        <TextField
+          id="metcon-score"
+          name="metcon-score"
+          label="Score"
+          onChange={(event) => (props.exercise.score = event.target.value)}
+          defaultValue={props.exercise.score}
+        />
+      </Grid>;
+  }
 
   return (
     <>
@@ -69,6 +130,8 @@ const ConditioningEdit = (props) => {
             (props.exercise.description = event.target.value)
           }
           defaultValue={props.exercise.description}
+          rowsMin={5}
+          className={classes.conditioningDescription}
         />
       </Grid>
 
@@ -84,21 +147,13 @@ const ConditioningEdit = (props) => {
           <MenuItem value={"Tempo"}>Tempo</MenuItem>
           <MenuItem value={"Ripetizioni"}>Ripetizioni</MenuItem>
           <MenuItem value={"Peso"}>Peso</MenuItem>
+          <MenuItem value={"Intervalli"}>Intervalli</MenuItem>
           <MenuItem value={"Altro"}>Altro</MenuItem>
           <MenuItem value={"No"}>No result ( for quality )</MenuItem>
         </Select>
       </Grid>
 
-      <Grid item>
-        {/* ---- score: [ score ]  */}
-        <TextField
-          id="metcon-score"
-          name="metcon-score"
-          label="Score"
-          onChange={(event) => (props.exercise.score = event.target.value)}
-          defaultValue={props.exercise.score}
-        />
-      </Grid>
+      {scoreDiv}
 
       <Grid item>
         {/* ---- note: [ note ]  */}

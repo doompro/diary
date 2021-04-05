@@ -70,11 +70,22 @@ const ExercisePreview = (props) => {
     }
   }
 
+  let exercisePreviewTitle = "";
+  if (props.exercise.title && props.exercise.title !== "") {
+    exercisePreviewTitle = props.exercise.title;
+  } else {
+    exercisePreviewTitle = props.exercise.type === "Conditioning" ? "Conditioning" : "Nuovo";
+  }
+
+  if (props.exercise.type !== "Conditioning") {
+    exercisePreviewTitle = exercisePreviewTitle + (exerciseRx ? exerciseRx : "");
+  }
+
   return (
     <Paper className={classes.exerciseRoot} onClick={() => props.onEdit(props.exercise)}>
       <Grid container direction="row" spacing={1} justify="space-between">
         <Grid item className={classes.exerciseTitle}>
-          {(props.exercise.title && props.exercise.title !== "" ? props.exercise.title : "Nuovo") + (exerciseRx ? exerciseRx : "")}
+          {exercisePreviewTitle}
         </Grid>
         <Grid item>
           <CreateIcon
