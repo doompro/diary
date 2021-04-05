@@ -98,6 +98,7 @@ const useStyles = makeStyles((theme) => ({
 
   addelementgrid: {
     cursor: "pointer",
+    marginTop: "10px",
   },
 
   modal: {
