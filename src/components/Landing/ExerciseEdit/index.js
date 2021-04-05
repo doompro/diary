@@ -74,8 +74,6 @@ const ExerciseEdit = (props) => {
     props.exercise.type || "Strength"
   );
 
-  console.log("props.exercise: ", props.exercise);
-
   const handleTypeChange = (value) => {
     setExeciseType(value);
     props.exercise.type = value;

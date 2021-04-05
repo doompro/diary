@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router";
 import { withFirebase } from "../Firebase";
 
@@ -10,7 +10,6 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-import CalendarToday from "@material-ui/icons/CalendarToday";
 import LockOpen from "@material-ui/icons/LockOpen";
 import ExitToApp from "@material-ui/icons/ExitToApp";
 import AccountCircle from "@material-ui/icons/AccountCircle";
@@ -18,7 +17,11 @@ import Build from "@material-ui/icons/Build";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 
+import mainLogo from './mini_logo.png';
+
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+
+const headerTextColor = '#76ff03';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,6 +32,8 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    color: headerTextColor,
+    textAlign: "center",
   },
   menuLabel: {
     paddingLeft: "10px",
@@ -36,6 +41,12 @@ const useStyles = makeStyles((theme) => ({
   menuSeparator: {
     borderTop: "1px solid black",
   },
+  coloredText: {
+    color: headerTextColor,
+  },
+  mainLogo: {
+    height: "32px",
+  }
 }));
 
 const Navigation = (firebase) => {
@@ -56,18 +67,17 @@ const Navigation = (firebase) => {
                 <IconButton
                   edge="start"
                   className={classes.menuButton}
-                  color="inherit"
                   aria-label="menu"
                   onClick={() => {
                     authUser ? history.push(ROUTES.LANDING) : history.push(ROUTES.HOME);
                   }}
+                  color="inherit"
                 >
-
-                  <CalendarToday />
+                  <img alt="logo" src={mainLogo} className={classes.mainLogo} />
                 </IconButton>
 
                 <Typography variant="h6" className={classes.title}>
-                  CrossFit Fabriano
+                  WOD Journal
                 </Typography>
 
                 {authUser ? (

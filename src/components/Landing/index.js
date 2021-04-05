@@ -94,6 +94,7 @@ const useStyles = makeStyles((theme) => ({
 
   addicon: {
     marginRight: 5,
+    color: "#8bc34a"
   },
 
   addelementgrid: {
