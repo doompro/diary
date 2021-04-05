@@ -57,7 +57,6 @@ const StrengthEdit = (props) => {
             id={"metcon-set-" + (i + 1)}
             name={"metcon-set-" + (i + 1)}
             label={"Serie " + (i + 1)}
-            /*onFocus={() => { document.getElementById("metcon-set-" + (i + 1)).scrollIntoView(); }}*/
             onChange={(event) => {
                 if (!props.exercise.sets) props.exercise.sets = [];
                 props.exercise.sets[i] = event.target.value;
