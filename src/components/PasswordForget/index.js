@@ -1,74 +1,121 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
 
 import { withFirebase } from "../Firebase";
 import * as ROUTES from "../../constants/routes";
 
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Avatar from '@material-ui/core/Avatar';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
 const PasswordForgetPage = () => (
-  <div>
-    <h1>PasswordForget</h1>
-    <PasswordForgetForm />
-  </div>
+  <PasswordForgetForm />
 );
 
-const INITIAL_STATE = {
-  email: "",
-  error: null,
-};
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © CrossFit Fabriano'}
+      {' '}
+    </Typography>
+  );
+}
 
-class PasswordForgetFormBase extends Component {
-  constructor(props) {
-    super(props);
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
-    this.state = { ...INITIAL_STATE };
-  }
+const PasswordForgetFormBase = (props) => {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState(null);
 
-  onSubmit = (event) => {
-    const { email } = this.state;
+  const classes = useStyles();
 
-    this.props.firebase
+  const onSubmit = (event) => {
+    props.firebase
       .doPasswordReset(email)
       .then(() => {
-        this.setState({ ...INITIAL_STATE });
+        setEmail(""); setError(null);
       })
       .catch((error) => {
-        this.setState({ error });
+        setError({ error });
       });
 
     event.preventDefault();
   };
 
-  onChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Recupera password
+        </Typography>
+        <form onSubmit={onSubmit}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
 
-  render() {
-    const { email, error } = this.state;
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            disabled={email === ""}
+          >
+            Recupera Password
+          </Button>
 
-    const isInvalid = email === "";
+          {error && <p>{error.message}</p>}
+        </form>
+      </div>
+      <Box mt={8}>
+        <Copyright />
+      </Box>
+    </Container>
+  );
 
-    return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          name="email"
-          value={this.state.email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <button disabled={isInvalid} type="submit">
-          Reset My Password
-        </button>
-
-        {error && <p>{error.message}</p>}
-      </form>
-    );
-  }
 }
 
 const PasswordForgetLink = () => (
   <p>
-    <Link to={ROUTES.PASSWORD_FORGET}>Forgot Password?</Link>
+    <Link to={ROUTES.PASSWORD_FORGET}>Password dimenticata?</Link>
   </p>
 );
 

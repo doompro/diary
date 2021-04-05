@@ -82,7 +82,7 @@ const SignInFormBase = (props) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Wod JOURNAL Log In
         </Typography>
         <form className={classes.form} noValidate onSubmit={onSubmit}>
           <TextField
@@ -121,7 +121,7 @@ const SignInFormBase = (props) => {
             className={classes.submit}
             disabled={password === "" || email === ""}
           >
-            Sign In
+            Entra
           </Button>
 
           {error && <p>{error.message}</p>}
@@ -140,7 +140,7 @@ const SignInFormBase = (props) => {
       </Box>
     </Container>
   );
-  //}
+
 }
 
 const SignInForm = withRouter(withFirebase(SignInFormBase));

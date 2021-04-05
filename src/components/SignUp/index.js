@@ -95,7 +95,7 @@ const SignUpFormBase = (props) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Registrati
         </Typography>
         <form onSubmit={onSubmit} className={classes.form} noValidate>
           <TextField
@@ -144,7 +144,7 @@ const SignUpFormBase = (props) => {
             required
             fullWidth
             name="password"
-            label="Confirm Password"
+            label="Conferma Password"
             type="password"
             id="passwordTwo"
             autoComplete="current-password"
@@ -161,7 +161,7 @@ const SignUpFormBase = (props) => {
             className={classes.submit}
             disabled={isInvalid}
           >
-            Sign Up
+            Conferma
           </Button>
 
           {error && <p>{error.message}</p>}
@@ -177,7 +177,7 @@ const SignUpFormBase = (props) => {
 
 const SignUpLink = () => (
   <p>
-    <Link to={ROUTES.SIGN_UP}>Don't have an account? Sign Up</Link>
+    <Link to={ROUTES.SIGN_UP}>Non hai un account? Registrati</Link>
   </p>
 );
 
