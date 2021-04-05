@@ -8,6 +8,10 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
+import { StrenghtExercise } from '../../../../utils/autocomplete'
+
 /**
  * Exercise template:
  * 
@@ -69,13 +73,25 @@ const StrengthEdit = (props) => {
         <>
             <Grid item>
                 { /* ---- exercise: [ nome esercizio / descrizione metcon ]  */}
-                <TextField
-                    id="exercise-name"
-                    name="exercise-name"
-                    label="Nome"
-                    onChange={(event) => props.exercise.title = event.target.value}
+                <Autocomplete
+                    id="exercise-name-autocomplete"
+                    freeSolo
+                    options={StrenghtExercise.map((option) => option.name)}
+
                     defaultValue={props.exercise.title}
+                    onInputChange={(event, values) => props.exercise.title = values}
+
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            id="exercise-name"
+                            name="exercise-name"
+                            label="Nome"
+                        />
+                    )}
                 />
+
+
             </Grid>
 
             <Grid item>

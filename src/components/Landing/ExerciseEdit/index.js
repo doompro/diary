@@ -69,10 +69,11 @@ function getFormContent(execiseType, exercise) {
 }
 
 const ExerciseEdit = (props) => {
-  const classes = useStyles();
   const [execiseType, setExeciseType] = useState(
-    props.exercise.type || "Strength"
+    props.exercise.type ? props.exercise.type : "Strength"
   );
+
+  const classes = useStyles();
 
   const handleTypeChange = (value) => {
     setExeciseType(value);

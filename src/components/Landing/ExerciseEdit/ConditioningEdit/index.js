@@ -55,7 +55,7 @@ const ConditioningEdit = (props) => {
   };
 
   let sets = [];
-  console.log("parseInt(setsNumber): ", parseInt(setsNumber))
+
   for (let i = 0; i < parseInt(setsNumber); i++) {
     sets.push(<TextField
       key={i}

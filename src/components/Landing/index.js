@@ -301,11 +301,12 @@ const Landing = (props) => {
           timeout: 500,
         }}
       >
-        <Fade in={modalOpen}>
-          <ExerciseEdit
+        <Fade in={modalOpen} disableStrictModeCompat={false}
+          children={<ExerciseEdit
             exercise={selectedExercise}
             closePopup={handleClose}
-          />
+          />}>
+
         </Fade>
       </Modal>
 
