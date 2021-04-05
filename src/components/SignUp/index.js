@@ -74,7 +74,6 @@ const SignUpFormBase = (props) => {
         props.history.push(ROUTES.LANDING);
       })
       .catch((error) => {
-        console.log("error catch: ", error)
         setError(error);
       });
 
