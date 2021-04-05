@@ -56,5 +56,4 @@ export const StrenghtExercise = [
     { name: 'Toes To Bar' },
     { name: 'Strict Handstand Pushups' },
     { name: 'Kipping Handstand Pushups' },
-
 ]
