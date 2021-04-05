@@ -246,7 +246,7 @@ const Landing = (props) => {
         direction="column"
         justify="center"
         alignItems="center"
-        spacing={3}
+        spacing={0}
       >
         <Grid item xs>
           <Paper className={classes.calendarAndSave} elevation={3}>
