@@ -9,6 +9,12 @@ import { DatePicker } from "@material-ui/pickers";
 
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
 
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -124,7 +130,9 @@ const Landing = (props) => {
   const [selectedDate, handleDateChange] = useState(new Date());
   const [exlist, setExlist] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [selectedExercise, setSelectedExercise] = useState({});
+  const [eliminatingId, setEliminatingId] = useState(null);
   //const [enableSave, setEnableSave] = useState(false);
 
   const authUid = props.authUid;
@@ -143,11 +151,25 @@ const Landing = (props) => {
     });
   }, [selectedDate, authUid, props.firebase]);
 
+  const handleCloseConfirm = () => {
+    setConfirmModalOpen(false);
+  }
+
+  const openConfirmModal = (i) => {
+    setEliminatingId(i);
+    setConfirmModalOpen(true);
+  }
+
+  const handleConfirmDelete = () => {
+    removeExercise(eliminatingId);
+  }
+
   const removeExercise = (i) => {
     handleSaveDay(exlist.filter((ele, idx) => ele.id !== i));
 
     setExlist(exlist.filter((ele, idx) => ele.id !== i));
     //setEnableSave(true);
+    handleCloseConfirm();
   };
 
   const addExercise = () => {
@@ -199,7 +221,8 @@ const Landing = (props) => {
     <ExercisePreview
       key={idx}
       exercise={ele}
-      onRemove={removeExercise}
+      //onRemove={removeExercise}
+      onRemove={openConfirmModal}
       onEdit={handleOpen}
     />
   ));
@@ -278,6 +301,28 @@ const Landing = (props) => {
           </Paper>
         </Fade>
       </Modal>
+
+      <Dialog
+        open={confirmModalOpen}
+        onClose={handleCloseConfirm}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Sei sicuro?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Sei sicuro di voler eliminare l'esericizio?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseConfirm} color="primary">
+            No
+          </Button>
+          <Button onClick={handleConfirmDelete} color="primary" autoFocus>
+            Si
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
