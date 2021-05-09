@@ -1,4 +1,6 @@
 export const StrenghtExercise = [
+    { name: '3-pos Clean' },
+    { name: '3-pos Snatch' },
     { name: 'Back Squat' },
     { name: 'Front Squat' },
     { name: 'Deadlift' },

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-
-//import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 import Grid from '@material-ui/core/Grid';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
@@ -43,7 +43,15 @@ import { StrenghtExercise } from '../../../../utils/autocomplete'
 
 }));*/
 
+const useStyles = makeStyles((theme) => ({
+    strenghtNote: {
+        width: "100%",
+    }
+}));
+
 const StrengthEdit = (props) => {
+    const classes = useStyles();
+
     //const classes = useStyles();
     const [setsNumber, setSetsNumber] = useState((props.exercise.rx && parseInt(props.exercise.rx.sets)) || 1);
     const [execiseType, setExeciseType] = useState(props.exercise.resultType || "Peso");
@@ -99,7 +107,7 @@ const StrengthEdit = (props) => {
                 <TextField
                     id="exercise-rx-sets"
                     name="exercise-rx-sets"
-                    label="Serie prescritte"
+                    label="Serie"
                     onChange={(event) => {
                         if (!props.exercise.rx) props.exercise.rx = {};
                         props.exercise.rx.sets = event.target.value;
@@ -110,7 +118,7 @@ const StrengthEdit = (props) => {
                 <TextField
                     id="exercise-rx-reps"
                     name="exercise-rx-reps"
-                    label="Reps prescritte"
+                    label="Ripetizioni"
                     onChange={(event) => {
                         if (!props.exercise.rx) props.exercise.rx = {};
                         props.exercise.rx.reps = event.target.value
@@ -145,9 +153,8 @@ const StrengthEdit = (props) => {
                 </Select>
             </Grid>
 
-            {!(props.exercise.rx && props.exercise.rx.sets) ?
+            {/*!(props.exercise.rx && props.exercise.rx.sets) ?
                 <Grid item>
-                    { /* numero di serie fatte  */}
                     <TextField
                         type="number"
                         id="strength-sets"
@@ -157,7 +164,7 @@ const StrengthEdit = (props) => {
                         defaultValue={setsNumber}
                     />
                 </Grid>
-                : null
+                : null*/
             }
 
             <Grid item>
@@ -167,12 +174,16 @@ const StrengthEdit = (props) => {
 
             <Grid item>
                 { /* ---- exercise: [ nome esercizio / descrizione metcon ]  */}
-                <TextField
-                    id="metcon-note"
-                    name="metcon-note"
+                <InputLabel id="strength-note-label">Note</InputLabel>
+                <TextareaAutosize
+                    id="strength-description"
+                    name="strength-description"
                     label="Note"
-                    onChange={(event) => props.exercise.note = event.target.value}
+                    onChange={(event) => props.exercise.note = event.target.value
+                    }
                     defaultValue={props.exercise.note}
+                    rowsMin={3}
+                    className={classes.strenghtNote}
                 />
             </Grid>
         </>
