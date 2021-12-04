@@ -47,6 +47,8 @@ class Firebase {
   // *** Exercise storage ***
 
   userExercise = (uid, date) => this.db.ref(`exercises/${uid}/${date}`);
+
+  userDirectory = (uid) => this.db.ref(`exercises/${uid}`);
 }
 
 export default Firebase;

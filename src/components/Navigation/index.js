@@ -13,6 +13,7 @@ import IconButton from "@material-ui/core/IconButton";
 import LockOpen from "@material-ui/icons/LockOpen";
 import ExitToApp from "@material-ui/icons/ExitToApp";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import Assignment from "@material-ui/icons/Assignment"
 import Build from "@material-ui/icons/Build";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
@@ -104,6 +105,15 @@ const Navigation = (firebase) => {
                           >
                             <AccountCircle />
                             <div className={classes.menuLabel}>Account</div>
+                          </MenuItem>
+                          <MenuItem
+                            onClick={() => {
+                              history.push(ROUTES.LOG);
+                              popupState.close();
+                            }}
+                          >
+                            <Assignment />
+                            <div className={classes.menuLabel}>Risultati</div>
                           </MenuItem>
                           {authUser.email === "daniele.senigagliesi@gmail.com" && (
                             <MenuItem onClick={() => { history.push(ROUTES.ADMIN); popupState.close(); }}>

@@ -216,11 +216,17 @@ const Landing = (props) => {
   const handleSaveDay = (newExercises) => {
     const exToSave = newExercises ? newExercises : exlist;
 
-    const dateString =
+    /*const dateString =
       "" +
       selectedDate.getFullYear() +
       selectedDate.getMonth() +
-      selectedDate.getDate();
+      selectedDate.getDate();*/
+
+    const dateString =
+      "" +
+      selectedDate.getFullYear() +
+      ("0" + (selectedDate.getMonth() + 1)).slice(-2) +
+      ("0" + selectedDate.getDate()).slice(-2)
 
     props.firebase.userExercise(authUid, dateString).set(exToSave);
     //setEnableSave(false);
