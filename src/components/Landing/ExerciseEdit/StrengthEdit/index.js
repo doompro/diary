@@ -74,6 +74,7 @@ const StrengthEdit = (props) => {
                 props.exercise.sets[i] = event.target.value;
             }}
             defaultValue={(props.exercise.sets && props.exercise.sets[i]) || ''}
+            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
         />);
     }
 
@@ -114,6 +115,7 @@ const StrengthEdit = (props) => {
                         setSetsNumber(parseInt(event.target.value));
                     }}
                     defaultValue={(props.exercise.rx && props.exercise.rx.sets) || ""}
+                    inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                 />
                 <TextField
                     id="exercise-rx-reps"
@@ -124,6 +126,7 @@ const StrengthEdit = (props) => {
                         props.exercise.rx.reps = event.target.value
                     }}
                     defaultValue={(props.exercise.rx && props.exercise.rx.reps) || ""}
+                    inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                 />
                 <TextField
                     id="exercise-rx-load"

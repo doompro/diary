@@ -112,7 +112,7 @@ const ExerciseLogPage = (props) => {
                   <TableRow>
                     <TableCell>Record giornaliero</TableCell>
                     <TableCell>Data</TableCell>
-                    <TableCell>Dettaglio</TableCell>
+                    <TableCell>Vedi allenamento</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
