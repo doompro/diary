@@ -88,23 +88,33 @@ const LogPage = (props) => {
 
         exercises.forEach(dailyExercise => {
           for (var i = 0; i < exerciseSetNames.length; i++) {
+
             if (dailyExercise.title.trim() === exerciseSetNames[i]) {
+              const foundExerciseName = exerciseSetNames[i];
 
-              if (dailyExercise.sets && dailyExercise.sets.map) {
+              const parsedDate = parseDateIdString(dateSnapshot.key);
+              const dateJs = new Date(parsedDate.year, parsedDate.month - 1, parsedDate.day);
+              var options = {};
 
-                const dailyMaxWeight = Math.max(...dailyExercise.sets.map(set => parseInt(set)));
-                const foundExerciseName = exerciseSetNames[i];
+              if (exerciseType === "weightlifting" || exerciseType === "gymnastics") {
+                if (dailyExercise.sets && dailyExercise.sets.map) {
+                  const dailyMaxWeight = Math.max(...dailyExercise.sets.map(set => parseInt(set)));
 
-                if ((parseInt(newExerciseList.find(ele => ele.name.trim() === foundExerciseName.trim()).best) || 0) < dailyMaxWeight) {
-                  const parsedDate = parseDateIdString(dateSnapshot.key);
-                  const dateJs = new Date(parsedDate.year, parsedDate.month - 1, parsedDate.day)
+                  if ((parseInt(newExerciseList.find(ele => ele.name.trim() === foundExerciseName.trim()).best) || 0) < dailyMaxWeight) {
+                    newExerciseList[newExerciseList.findIndex(ele => ele.name.trim() === foundExerciseName.trim())].best = dailyMaxWeight;
 
-                  newExerciseList[newExerciseList.findIndex(ele => ele.name.trim() === foundExerciseName.trim())].best = dailyMaxWeight;
+                    options = parsedDate.day !== null ? { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' } : { year: 'numeric', month: 'long' }
+                    newExerciseList[newExerciseList.findIndex(ele => ele.name.trim() === foundExerciseName.trim())].date = dateJs.toLocaleDateString("it-IT", options);
+                  }
 
-                  var options = parsedDate.day !== null ? { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' } : { year: 'numeric', month: 'long' }
-                  newExerciseList[newExerciseList.findIndex(ele => ele.name.trim() === foundExerciseName.trim())].date = dateJs.toLocaleDateString("it-IT", options);
                 }
+              }
+              else if (exerciseType === "endurance" || exerciseType === "benchmark") {
+                // FIXME: confronta benchmark per resultype, al momento metto l'ultimo
+                newExerciseList[newExerciseList.findIndex(ele => ele.name.trim() === foundExerciseName.trim())].best = dailyExercise.score;
 
+                options = parsedDate.day !== null ? { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' } : { year: 'numeric', month: 'long' }
+                newExerciseList[newExerciseList.findIndex(ele => ele.name.trim() === foundExerciseName.trim())].date = dateJs.toLocaleDateString("it-IT", options);
               }
             }
           }

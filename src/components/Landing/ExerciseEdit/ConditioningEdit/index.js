@@ -8,6 +8,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
+import { EnduranceWorkouts, BenchmarkWorkouts } from '../../../../utils/autocomplete'
+
 /**
  * Exercise template:
  *
@@ -112,12 +116,21 @@ const ConditioningEdit = (props) => {
     <>
       <Grid item>
         {/* ---- title: [ nome esercizio / descrizione metcon ]  */}
-        <TextField
+        <Autocomplete
           id="metcon-title"
-          name="metcon-title"
-          label="Nome (Opzionale)"
-          onChange={(event) => (props.exercise.title = event.target.value)}
+          freeSolo
+          options={[...EnduranceWorkouts.map((option) => option.name), ...BenchmarkWorkouts.map((option) => option.name)]}
           defaultValue={props.exercise.title}
+          onInputChange={(event, values) => props.exercise.title = values}
+
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              id="exercise-name"
+              name="exercise-name"
+              label="Nome"
+            />
+          )}
         />
       </Grid>
 
