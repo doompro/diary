@@ -149,16 +149,28 @@ const Landing = (props) => {
   const authUid = props.authUid;
 
   useEffect(() => {
-    const dateString =
+    const dateStringLegacy =
       "" +
       selectedDate.getFullYear() +
       selectedDate.getMonth() +
       selectedDate.getDate();
 
-    props.firebase.userExercise(authUid, dateString).on("value", (snapshot) => {
+    const dateString =
+      "" +
+      selectedDate.getFullYear() +
+      ("0" + (selectedDate.getMonth() + 1)).slice(-2) +
+      ("0" + selectedDate.getDate()).slice(-2)
+
+    /*props.firebase.userExercise(authUid, dateString).on("value", (snapshot) => {
       const exerciseList = snapshot.val();
       //console.log("READING EXERCISE LIST: ", exerciseList);
       setExlist(exerciseList || []);
+    });*/
+
+    props.firebase.userDirectory(authUid).on("value", (snapshot) => {
+      const exerciseList = snapshot.val();
+      //console.log("READING EXERCISE LIST: ", exerciseList);
+      setExlist(exerciseList[dateString] || exerciseList[dateStringLegacy] || []);
     });
   }, [selectedDate, authUid, props.firebase]);
 
