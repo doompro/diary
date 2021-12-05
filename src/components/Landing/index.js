@@ -29,6 +29,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ExercisePreview from "./ExercisePreview";
 import ExerciseEdit from "./ExerciseEdit";
 import { create_UUID } from "../../utils/uuid";
+import { parseDateIdString } from "../../utils/parseDateId";
 
 /**
  * Exercise template:
@@ -138,7 +139,9 @@ const useStyles = makeStyles((theme) => ({
 const Landing = (props) => {
   const classes = useStyles();
 
-  const [selectedDate, handleDateChange] = useState(new Date());
+  const presetDateKey = props.location.state && props.location.state.dateId ? parseDateIdString(props.location.state.dateId) : null;
+  const [selectedDate, handleDateChange] = useState(presetDateKey ? new Date(presetDateKey.year, presetDateKey.month - 1, presetDateKey.day) : new Date());
+
   const [exlist, setExlist] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
@@ -147,6 +150,7 @@ const Landing = (props) => {
   //const [enableSave, setEnableSave] = useState(false);
 
   const authUid = props.authUid;
+
 
   useEffect(() => {
     const dateStringLegacy =

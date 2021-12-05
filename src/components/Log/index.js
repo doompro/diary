@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 
+import { useHistory } from "react-router";
+import * as ROUTES from "../../constants/routes";
+
 import { AuthUserContext, withAuthorization, AuthCondition } from "../Session";
 
 import { BenchmarkWorkouts, EnduranceWorkouts, StrenghtExercise } from "../../utils/autocomplete";
@@ -43,11 +46,16 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     padding: "15px"
   },
+
+  searchIcon: {
+    cursor: "pointer"
+  }
 }));
 
 const LogPage = (props) => {
   const authUid = props.authUid;
   const classes = useStyles();
+  const history = useHistory();
 
   /* filtro tipologia: weightlifting|gymnastics|endurance|benchmark */
   const [exerciseType, setExerciseType] = useState(
@@ -179,7 +187,20 @@ const LogPage = (props) => {
                       </TableCell>
                       <TableCell>{exercise.best}</TableCell>
                       <TableCell>{exercise.date}</TableCell>
-                      <TableCell><Search /></TableCell>
+                      <TableCell><Search
+                        className={classes.searchIcon}
+
+                        onClick={() => {
+                          history.push(
+
+                            {
+                              pathname: ROUTES.EXERCISELOG,
+                              state: { exerciseName: exercise.name, exerciseType: exerciseType }
+                            }
+
+                          );
+                        }}
+                      /></TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

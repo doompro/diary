@@ -10,7 +10,7 @@ import HomePage from "../Home";
 import AccountPage from "../Account";
 import AdminPage from "../Admin";
 import LogPage from "../Log";
-
+import ExerciseLogPage from "../ExeciseLog";
 
 import { AuthUserContext } from "../Session";
 
@@ -35,6 +35,9 @@ const App = () => (
           <Route path={ROUTES.ADMIN} component={AdminPage} />
           <Route path={ROUTES.LOG} render={(props) => (
             <LogPage {...props} authUid={authUser && authUser.uid} />
+          )} />
+          <Route path={ROUTES.EXERCISELOG} render={(props) => (
+            <ExerciseLogPage {...props} authUid={authUser && authUser.uid} />
           )} />
         </div>
       </Router>
