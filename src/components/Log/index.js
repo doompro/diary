@@ -24,7 +24,7 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
+  /*paper: {
     minHeight: 5,
     minWidth: "100%",
     padding: theme.spacing(2),
@@ -33,10 +33,15 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     flexWrap: "wrap",
     justifyContent: "center",
-  },
+  },*/
 
   typeSelect: {
     width: "150px",
+  },
+
+  containerGrid: {
+    textAlign: "center",
+    padding: "15px"
   },
 }));
 
@@ -92,7 +97,7 @@ const LogPage = (props) => {
 
                 if ((parseInt(newExerciseList.find(ele => ele.name.trim() === foundExerciseName.trim()).best) || 0) < dailyMaxWeight) {
                   const parsedDate = parseDateIdString(dateSnapshot.key);
-                  const dateJs = new Date(parsedDate.year, parsedDate.month, parsedDate.day)
+                  const dateJs = new Date(parsedDate.year, parsedDate.month - 1, parsedDate.day)
 
                   newExerciseList[newExerciseList.findIndex(ele => ele.name.trim() === foundExerciseName.trim())].best = dailyMaxWeight;
 
@@ -119,10 +124,11 @@ const LogPage = (props) => {
         direction="column"
         justify="center"
         alignItems="center"
-        spacing={0}
+        item xs={5}
+        className={classes.containerGrid}
       >
         <Grid item>
-          <h1>Log risultati</h1>
+          <h2>Risultati</h2>
         </Grid>
 
         <Grid item>
