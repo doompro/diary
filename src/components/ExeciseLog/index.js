@@ -6,7 +6,8 @@ import { AuthUserContext, withAuthorization, AuthCondition } from "../Session";
 
 import { parseDateIdString } from "../../utils/parseDateId";
 
-import LocationSearching from '@material-ui/icons/LocationSearching';
+import Pageview from '@material-ui/icons/Pageview';
+import ArrowBack from '@material-ui/icons/ArrowBack';
 
 import Grid from "@material-ui/core/Grid";
 
@@ -29,7 +30,18 @@ const useStyles = makeStyles((theme) => ({
 
   searchIcon: {
     cursor: "pointer"
+  },
+
+  backIcon: {
+    marginRight: "10px",
+  },
+
+
+  topTitle: {
+    display: "flex",
+    alignItems: "center"
   }
+
 }));
 
 const ExerciseLogPage = (props) => {
@@ -101,7 +113,16 @@ const ExerciseLogPage = (props) => {
         className={classes.containerGrid}
       >
         <Grid item>
-          <h2>Risultati per {exerciseName}</h2>
+          <div className={classes.topTitle}>
+            <Paper className={classes.backIcon}>
+              <ArrowBack
+                onClick={() => {
+                  history.goBack();
+                }}
+                className={classes.searchIcon} />
+            </Paper>
+            <h2>Risultati per {exerciseName}</h2>
+          </div>
         </Grid>
 
         <Grid item>
@@ -110,18 +131,18 @@ const ExerciseLogPage = (props) => {
               <Table aria-label="caption table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Record giornaliero</TableCell>
-                    <TableCell>Data</TableCell>
-                    <TableCell>Vedi allenamento</TableCell>
+                    <TableCell align="center">Record giornaliero</TableCell>
+                    <TableCell align="center">Data</TableCell>
+                    <TableCell align="center">Vedi allenamento</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {dayList.map((day) => (
                     <TableRow key={day.dateKey}>
-                      <TableCell>{day.best}</TableCell>
-                      <TableCell>{day.date}</TableCell>
-                      <TableCell>
-                        <LocationSearching
+                      <TableCell align="center">{day.best}</TableCell>
+                      <TableCell align="center">{day.date}</TableCell>
+                      <TableCell align="center">
+                        <Pageview
                           onClick={() => {
                             history.push(
 

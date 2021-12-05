@@ -46,6 +46,10 @@ import { StrenghtExercise } from '../../../../utils/autocomplete'
 const useStyles = makeStyles((theme) => ({
     strenghtNote: {
         width: "100%",
+    },
+
+    rxLoad: {
+        minWidth: "250px",
     }
 }));
 
@@ -128,6 +132,9 @@ const StrengthEdit = (props) => {
                     defaultValue={(props.exercise.rx && props.exercise.rx.reps) || ""}
                     inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                 />
+            </Grid>
+
+            <Grid item>
                 <TextField
                     id="exercise-rx-load"
                     name="exercise-rx-load"
@@ -137,6 +144,7 @@ const StrengthEdit = (props) => {
                         props.exercise.rx.load = event.target.value
                     }}
                     defaultValue={(props.exercise.rx && props.exercise.rx.load) || ""}
+                    className={classes.rxLoad}
                 />
             </Grid>
 

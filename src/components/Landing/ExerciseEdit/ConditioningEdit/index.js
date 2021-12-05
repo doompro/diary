@@ -41,7 +41,12 @@ import { EnduranceWorkouts, BenchmarkWorkouts } from '../../../../utils/autocomp
 const useStyles = makeStyles((theme) => ({
   conditioningDescription: {
     width: "100%",
+  },
+
+  metconNote: {
+    width: "100%",
   }
+
 }));
 
 const ConditioningEdit = (props) => {
@@ -172,12 +177,16 @@ const ConditioningEdit = (props) => {
 
       <Grid item>
         {/* ---- note: [ note ]  */}
-        <TextField
+        <InputLabel id="metcon-note-label">Note</InputLabel>
+        <TextareaAutosize
           id="metcon-note"
           name="metcon-note"
           label="Note"
-          onChange={(event) => (props.exercise.note = event.target.value)}
+          onChange={(event) => props.exercise.note = event.target.value
+          }
           defaultValue={props.exercise.note}
+          rowsMin={3}
+          className={classes.metconNote}
         />
       </Grid>
     </>

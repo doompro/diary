@@ -9,6 +9,7 @@ import { BenchmarkWorkouts, EnduranceWorkouts, StrenghtExercise } from "../../ut
 import { parseDateIdString } from "../../utils/parseDateId";
 
 import Search from '@material-ui/icons/Search';
+import ArrowBack from '@material-ui/icons/ArrowBack';
 
 import InputLabel from '@material-ui/core/InputLabel';
 import Grid from "@material-ui/core/Grid";
@@ -49,6 +50,15 @@ const useStyles = makeStyles((theme) => ({
 
   searchIcon: {
     cursor: "pointer"
+  },
+
+  backIcon: {
+    marginRight: "10px",
+  },
+
+  topTitle: {
+    display: "flex",
+    alignItems: "center"
   }
 }));
 
@@ -146,7 +156,16 @@ const LogPage = (props) => {
         className={classes.containerGrid}
       >
         <Grid item>
-          <h2>Risultati</h2>
+          <div className={classes.topTitle}>
+            <Paper className={classes.backIcon}>
+              <ArrowBack
+                onClick={() => {
+                  history.goBack();
+                }}
+                className={classes.searchIcon} />
+            </Paper>
+            <h2>Risultati</h2>
+          </div>
         </Grid>
 
         <Grid item>
