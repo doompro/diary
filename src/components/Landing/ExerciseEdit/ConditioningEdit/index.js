@@ -56,7 +56,8 @@ const ConditioningEdit = (props) => {
     props.exercise.resultType || "Tempo"
   );
 
-  const [setsNumber, setSetsNumber] = useState((props.exercise && parseInt(props.exercise.sets)) || 1);
+  const [setsNumber, setSetsNumber] = useState((props.exercise && parseInt(props.exercise.sets.length)) || 1);
+  console.log("props.exercise: ", props.exercise)
 
   const handleTypeChange = (value) => {
     setExeciseType(value);

@@ -130,7 +130,7 @@ const StrengthEdit = (props) => {
                         props.exercise.rx.reps = event.target.value
                     }}
                     defaultValue={(props.exercise.rx && props.exercise.rx.reps) || ""}
-                    inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                /*inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}*/
                 />
             </Grid>
 
