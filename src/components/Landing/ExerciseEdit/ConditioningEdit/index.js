@@ -57,7 +57,6 @@ const ConditioningEdit = (props) => {
   );
 
   const [setsNumber, setSetsNumber] = useState((props.exercise && parseInt(props.exercise.sets.length)) || 1);
-  console.log("props.exercise: ", props.exercise)
 
   const handleTypeChange = (value) => {
     setExeciseType(value);
@@ -99,6 +98,7 @@ const ConditioningEdit = (props) => {
             setSetsNumber(event.target.value);
           }}
           defaultValue={setsNumber}
+          inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
         />
       </Grid>
         {sets}
