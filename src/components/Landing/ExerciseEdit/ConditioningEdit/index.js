@@ -45,6 +45,10 @@ const useStyles = makeStyles((theme) => ({
 
   metconNote: {
     width: "100%",
+  },
+
+  intervalNumber: {
+    marginBottom: "30px",
   }
 
 }));
@@ -99,6 +103,7 @@ const ConditioningEdit = (props) => {
           }}
           defaultValue={setsNumber}
           inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+          className={classes.intervalNumber}
         />
       </Grid>
         {sets}
