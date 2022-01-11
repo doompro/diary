@@ -130,4 +130,5 @@ export const BenchmarkWorkouts = [
     { name: 'Fight Gone Bad' },
     { name: 'DT' },
     { name: '30 ring muscle ups for time' },
+    { name: 'CEO' },
 ]
